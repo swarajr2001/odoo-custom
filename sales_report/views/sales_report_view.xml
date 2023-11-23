@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+<!--tree view of created record-->
+    <record id="sales_report_tree" model="ir.ui.view">
+        <field name="name">sales.report.tree</field>
+        <field name="model">report.sales</field>
+        <field name="arch" type="xml">
+            <tree string="Channel">
+                <field name="sequence"/>
+                <field name="sales_team_id"/>
+                <field name="duration"/>
+                <field name="from_date"/>
+                <field name="to_date"/>
+            </tree>
+         </field>
+        </record>
+
+    <!--view for the sales wizard created-->
+    <record id="custom_sales_report" model="ir.ui.view">
+        <field name="name">sales.monthly.report</field>
+        <field name="model">report.sales</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="create_weekly_report" id="action_confirm" data-hotkey="v" string="Confirm"
+                            class="btn-primary" type="object" context="{'validate_analytic': True}"/>
+                    </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="sequence" readonly="1"/>
+                        </h1>
+                    </div>
+
+                <group>
+                    <group>
+                        <field name="select_customer_ids" widget="many2many_tags"/>
+                        <field name="sales_team_id"/>
+                        <field name="duration"/>
+                    </group>
+                    <group>
+                        <field name="from_date"/>
+                        <field name="to_date"/>
+                    </group>
+                </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!--Action for the view created-->
+
+    <record id="sales_report_action" model="ir.actions.act_window">
+        <field name="name">Sales report monthly weekly basis</field>
+        <field name="res_model">report.sales</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="sales_report__menu_root" name="Email sales report" parent="sale.menu_sale_config" action="sales_report_action" sequence="8"/>
+
+</odoo>
+

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!--view for the wizard created-->
+    <record id="vehicle_report" model="ir.ui.view">
+        <field name="name">vehicle.view.report</field>
+        <field name="model">vehicle.report</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="partner_ids" widget="many2many_tags"/>
+                    <field name="vehicle_name"/>
+                    <field name="from_date"/>
+                    <field name="to_date"/>
+                </group>
+                <footer>
+                    <button name="action_confirm" id="action_confirm" data-hotkey="v" string="Generate PDF"
+                            class="btn-primary" type="object"/>
+                    <button name="excel_generate" id="action_confirm" data-hotkey="j" string="Generate Excel"
+                            class="btn-primary" type="object"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel" data-hotkey="z"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <!--Action for the wizard created-->
+    <record id="vehicle_report_action" model="ir.actions.act_window">
+        <field name="name">Vehicle request report</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">vehicle.report</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="vehicle_report"/>
+        <field name="target">new</field>
+    </record>
+</odoo>

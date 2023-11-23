@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!--Actions for the material request-->
+    <record id="material_request" model="ir.actions.act_window">
+         <field name="name">Material Request</field>
+        <field name="res_model">material.request</field>
+        <field name="view_mode">tree,form,kanban</field>
+    </record>
+
+    <!--Menu for the material request-->
+    <menuitem id="parent" name="Material request"/>
+    <menuitem id="request_first_menu_root" name="Material request" parent="parent"   sequence="18"/>
+    <menuitem id="request_second_menu_root" name="Create request " parent="request_first_menu_root" action="material_request" sequence="8"/>
+
+</odoo>

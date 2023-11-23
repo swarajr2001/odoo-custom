@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+<!--dynamic snippet created for vehicle in the website-->
+
+<template id="vehicle_request_snippet" name="Vehicle request">
+       <section class="container dynamic_snippet_blog">
+           <div class="row">
+               <div class="container">
+                   <h1 style="text-align: center; color:black; font-weight: bold;">Top requested vehicle</h1>
+               </div>
+               <div id="datacorosel">
+
+               </div>
+           </div>
+
+       </section>
+    </template>
+
+<!--the created snippet is inherited to the dynamic section-->
+
+    <template id="external_snippets" inherit_id="website.snippets" priority="8">
+        <xpath expr="//div[@id='snippet_effect']//t[@t-snippet][last()]" position="after">
+               <t t-snippet="vehicle_rental.vehicle_request_snippet"
+               t-thumbnail="/vehicle_rental/static/src/img/download.png"/>
+           </xpath>
+    </template>
+</odoo>

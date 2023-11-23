@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+	<!--inherited the product.product model and added the field brand after field detailed_type-->
+    <record id="product_brand_field" model="ir.ui.view">
+        	<field name="name">product.product.form.inherit</field>
+        	<field name="model">product.product</field>
+        	<field name="inherit_id" ref="product.product_normal_form_view"/>
+        	<field name="arch" type="xml">
+            	<xpath expr="//field[@name='detailed_type']" position="after">
+                		<field name="brand"/>
+				</xpath>
+        	</field>
+    </record>
+</odoo>

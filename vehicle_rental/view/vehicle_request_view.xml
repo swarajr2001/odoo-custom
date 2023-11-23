@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!--request tree view -->
+    <record id="vehicle_request_tree" model="ir.ui.view">
+        <field name="name">request tree view</field>
+        <field name="model">vehicle.request</field>
+        <field name="arch" type="xml">
+            <tree string="my tree" decoration-warning="warning == True"
+            decoration-danger="late == True">
+                <field name="sequence"/>
+                <field name="partner_id"/>
+                <field name="vehicle_id"/>
+                <field name="states" optional="hide"/>
+                <field name="rent" optional="hide"/>
+                <field name="from_date" optional="hide"/>
+                <field name="to_date" optional="hide"/>
+                <field name="warning" optional="hide"/>
+                <field name="late" optional="hide"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="rent_request_form" model="ir.ui.view">
+        <field name="name">rent request form</field>
+        <field name="model">vehicle.request</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_confirm" id="action_confirm" data-hotkey="v" string="Confirm" groups="vehicle_rental.rental_manager_access"
+                            class="btn-primary" type="object" context="{'validate_analytic': True}"
+                            attrs="{'invisible': [('states', 'in', ['confirm','returned', 'invoiced'])]}"/>
+                    <button name="action_return" id="action_return" data-hotkey="v" string="Return" class="btn-primary"
+                            type="object" context="{'validate_analytic': True}"
+                            attrs="{'invisible': [('states', 'in', ['draft','returned'])]}"/>
+                    <button name="action_order_processing" type="object" string="Create Invoice"  class="btn-primary" data-hotkey="q" attrs="{'invisible': [('states', '!=', 'confirm')]}"/>
+                    <field name="states" widget="statusbar"/>
+                </header>
+
+
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="view_invoice" icon="fa-pencil-square-o" type="object" string="Invoice"  class="btn-primary" data-hotkey="q" attrs="{'invisible': [('states', '!=', 'invoiced')]}">
+                        </button>
+                    </div>
+                    <widget name="web_ribbon" title="Paid" attrs="{'invisible': [('check_paid', '=', False)]}"/>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="sequence"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="partner_id" widget="res_partner_many2one"
+                                   context="{'res_partner_search_mode': 'customer', 'show_address': 1}"
+                                   options="{&quot;always_reload&quot;: True}"/>
+                            <field name="request_date"/>
+                            <field name="vehicle_id"/>
+                            <field name="period_id"/>
+                            <field name="late" widget="bool_badge" options="{'trueColor': 'orange', 'falseColor': 'pink','trueValue':'true','falseValue':'false'}"/>
+                            <field name="check_paid" invisible="1"/>
+                        </group>
+
+                        <group>
+                            <field widget="monetary" name="rent"/>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="from_date"/>
+                            <field name="to_date"/>
+                            <field name="period"/>
+                            <field name="warning"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+</odoo>

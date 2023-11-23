@@ -1,0 +1,16 @@
+id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+
+access_vehicle_request,access_vehicle_request,model_vehicle_request,base.group_user,1,1,1,1
+access_vehicle_details,access_vehicle_details,model_vehicle_details,base.group_user,1,1,1,1
+access_rent_charge,access_rent_charge,model_rent_charge,base.group_user,1,1,1,1
+
+
+access_vehicle_request_user,access_vehicle_request_user,model_vehicle_request,vehicle_rental.rental_user_access,1,1,1,0
+access_vehicle_details_user,access_vehicle_details_user,model_vehicle_details,vehicle_rental.rental_user_access,1,0,0,0
+
+access_vehicle_request,access_vehicle_request,model_vehicle_request,vehicle_rental.rental_manager_access,1,1,1,1
+access_vehicle_details,access_vehicle_details,model_vehicle_details,vehicle_rental.rental_manager_access,1,1,1,1
+
+access_vehicle_report,access_vehicle_report,model_vehicle_report,vehicle_rental.rental_manager_access,1,1,1,1
+
+

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!-- tree view of the material request-->
+    <record id="tree_view_of_request" model="ir.ui.view">
+        <field name="name">material.request.tree.form</field>
+        <field name="model">material.request</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="reference_no"/>
+                <field name="employee_id"/>
+                <field name="date"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- view of the material request-->
+    <record id="view_of_request" model="ir.ui.view">
+        <field name="name">material view form</field>
+        <field name="model">material.request</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="state" widget="statusbar" options="{'clickable': '1'}"/>
+                    <button class="btn-primary" type="object" string="Submit" name="submit" groups="material_request.requisition_user"
+                    attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+
+
+                    <button class="btn-primary" type="object" string="Approve" name="approve"  groups="material_request.requisition_manager"
+                    attrs="{'invisible': [('state', '!=', 'submitted')]}"/>
+
+                    <button class="btn-primary" type="object" string="Approve" name="approved"  groups="material_request.requisition_head"
+                    attrs="{'invisible': [('state', '!=', 'approval-1')]}"/>
+
+                    <button class="btn-primary" type="object" string="Reject" name="reject"  groups="material_request.requisition_head"
+                    attrs="{'invisible': [('state', '!=', 'approval-1')]}"/>
+
+                </header>
+
+                <sheet>
+                    <div name="button_box" position="inside">
+                            <button class="oe_stat_button" type="object" string="View RFQ" name="view_rfq" icon="fa-pencil-square-o"
+                            attrs="{'invisible': [('is_purchased', '=', False)]}">
+                                <field string="View RFQ" name="rfq_count" widget="statinfo" />
+                            </button>
+
+                            <button class="oe_stat_button" type="object"  name="internal_transfer" icon="fa-exchange"
+                            attrs="{'invisible': [('is_internal_transfer', '=', False)]}">
+                                <field name="internal_transfer_count" string="Internal-transfer" widget="statinfo"/>
+                            </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="reference_no" readonly="1"/>
+                        </h1>
+                    </div>
+
+                    <group>
+                        <field name="employee_id"/>
+                        <field name="date"/>
+                        <field name="is_internal_transfer" invisible="1"/>
+                        <field name="is_purchased" invisible="1"/>
+                    </group>
+
+
+                    <field name="materials_ids">
+                        <tree editable="bottom">
+                            <field name="material_id"/>
+                            <field name="method"/>
+                            <field name="source_location_id" attrs="{'required': [('method', '=', 'internal_transfer')],
+                             'invisible':[('method','!=','internal_transfer')]}"/>
+                            <field name="destination_location_id" attrs="{'required': [('method', '=', 'internal_transfer')],
+                            'invisible':[('method','!=','internal_transfer')]}"/>
+                        </tree>
+                    </field>
+
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!--filter,group-by,search-->
+    <record id="vehicle_details_search" model="ir.ui.view">
+        <field name="name">vehicle.search</field>
+        <field name="model">vehicle.details</field>
+        <field name="arch" type="xml">
+            <search>
+                <!--search for name and brand-->
+                <field name="name"/>
+                <field name="brand"/>
+
+                <!--filter to show available and not available state-->
+                <filter string="Available" name="state" domain="[('state', 'in',['available'])]"/>
+                <filter string="Not available" name="state2" domain="[('state', 'in',['nor available'])]"/>
+
+                <!-- group by brand and model year-->
+                <group expand="0" string="group by">
+                    <filter string="Brand" name="brand" context="{'group_by':'brand','residual_visible':True}"/>
+                    <filter string="Model Year" name="year_field"
+                            context="{'group_by':'year_field','residual_visible':True}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!--tree view -->
+    <record id="vehicle_details_view_tree" model="ir.ui.view">
+        <field name="name">vehicle tree view</field>
+        <field name="model">vehicle.details</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="vehicle_id"/>
+                <field name="brand"/>
+                <field name="state"/>
+                <field name="year_field" optional="hide"/>
+                <field name="rent" optional="hide"/>
+            </tree>
+        </field>
+    </record>
+
+    <!--form view of the vehicle detail-->
+    <record id="vehicle_details_view_form" model="ir.ui.view">
+        <field name="name">vehicle form</field>
+        <field name="model">vehicle.details</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="state" widget="statusbar" options="{'clickable': '1'}"/>
+
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="req_created" type="object" class="oe_stat_button" icon="fa-book"
+                                help="show the contract for this vehicle">
+                            <field name="request_count" widget="statinfo" string="Requests"/>
+                        </button>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="vehicle_id"/>
+                            <field name="name"/>
+                            <field name="brand"/>
+                        </group>
+
+                        <group>
+                            <field name="rent" widget="monetary"/>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="year_field"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Rent Charges">
+                            <field name="amount_ids">
+                                <tree editable="bottom">
+                                    <field name="time"/>
+                                    <field name="amount"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Rent Request">
+                            <field name="req_ids">
+                                <tree>
+                                    <field name="sequence"/>
+                                    <field name="partner_id"/>
+                                    <field name="vehicle_id"/>
+                                    <field name="rent"/>
+                                    <field name="states"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+</odoo>
+

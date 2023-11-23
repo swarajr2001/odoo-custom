@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+<!--this form makes visible the details of the clicked vehicle-->
+    <template id="vehicle_details_view" name="form">
+
+        <t t-call="website.layout">
+            <div class="row">
+                  <h2 style="text-align: center; color:black; font-weight: bold;">Vehicle details</h2>
+            </div>
+
+            <div class="col-4" style="margin-left:400px;">
+
+                    <div class="row">
+                        <div class="col">
+                        <label for="name">Vehicle name:</label>
+                        <input type="text" name="customer" class="form-control" t-att-value="vehicle_data[0].get('name')" readonly="1"/>
+                        </div>
+
+                    </div>
+
+                <div class="row">
+                    <div class="col">
+                    <label for="model">Model:</label>
+                        <input type="text" name="model" class="form-control" t-att-value="vehicle_data[0].get('model')" readonly="1"/>
+                    </div>
+                </div>
+
+
+
+                <div class="row">
+                    <div class="col">
+                    <label for="vehicle">Brand:</label>
+                        <input type="text"  name="brand" class="form-control" t-att-value="vehicle_data[0].get('brand')" readonly="1"/>
+                    </div>
+                </div>
+
+                     <div class="row">
+                        <div class="col">
+                        <label for="vehicle">Rent:</label>
+                            <input type="text"  name="vehicle" class="form-control" t-att-value="vehicle_data[0].get('rent')" readonly="1"/>
+                        </div>
+                     </div>
+                    <div class="row">
+                        <div class="col">
+                            <a t-attf-href="/back-to-main"  class="btn btn-secondary"> Exit </a>
+                        </div>
+                     </div>
+
+            </div>
+
+        </t>
+    </template>
+</odoo>

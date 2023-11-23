@@ -1,0 +1,52 @@
+<odoo>
+<!--this is the template view of the generated pdf report-->
+    <template id="sales_report_pdf">
+        <t t-call="web.html_container">
+                <t t-call="web.external_layout">
+                    <t t-if="period== 'weekly'">
+                        <h1>Weekly Sales report</h1>
+                        <div>
+                            <div> <span> From date:<t t-esc="from_date"/> </span></div>
+                            <div> <span> To date:<t t-esc="to_date"/></span></div>
+                        </div>
+                     </t>
+
+                    <t t-if="period== 'monthly'">
+                        <h1>Monthly Sales report</h1>
+                        <div>
+                            <div> <span> From date:<t t-esc="from_date"/> </span></div>
+                            <div> <span> To date:<t t-esc="to_date"/> </span></div>
+                        </div>
+                     </t>
+
+                    <table class="table" style = "border: solid gray 4px">
+                         <thead style = "border: solid gray 4px">
+                                <tr>
+                                    <th>SI.no</th>
+                                    <th>Customer</th>
+                                    <th>Order id</th>
+                                    <th>Total amount</th>
+                                    <th>Sales person</th>
+                                    <th>Sales team</th>
+                                </tr>
+                         </thead>
+                            <tbody>
+                                <t t-set="counter" t-value="1" />
+                                <t t-foreach="report" t-as = "det">
+                                    <t t-set="sales_person" t-value="request.env['res.users'].browse(det.get('sales_person')).name"/>
+                                        <tr>
+                                            <td style="text-align: center; vertical-align: middle;"> <span><t t-esc="counter"/></span></td>
+                                            <td style="text-align: center; vertical-align: middle;"> <span><t t-esc = "det.get('customer')" /> </span></td>
+                                            <td style="text-align: center; vertical-align: middle;"> <span><t t-esc = "det.get('names')" /></span> </td>
+                                            <td style="text-align: center; vertical-align: middle;"> <span><t t-esc = "det.get('total')" /> </span></td>
+                                            <td style="text-align: center; vertical-align: middle;"> <span><t t-esc ='sales_person'/> </span></td>
+                                            <td style="text-align: center; vertical-align: middle;"> <span><t t-esc = "det.get('sales_team')" /> </span></td>
+                                        </tr>
+                                <t t-set="counter" t-value="counter + 1" />
+                                </t>
+                            </tbody>
+                    </table>
+                </t>
+        </t>
+    </template>
+</odoo>

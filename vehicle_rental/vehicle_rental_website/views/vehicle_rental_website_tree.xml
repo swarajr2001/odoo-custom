@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+<!--this gives the tree view of the created request in the website page -->
+    <template id="vehicle_request_tree_view" name="form">
+        <t t-call="website.layout">
+            <div class="container">
+             <form  method="post" action="/create">
+                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                 <h2 style="text-align: center;">Vehicle Rental Request</h2>
+                <div class="row">
+                   <div class="col" style="margin-top:15px;margin-bottom:10px;">
+                    <button type="submit" class="btn btn-primary"> Create</button>
+                    </div>
+                </div>
+                 <table class="table table-hover">
+                          <thead>
+                            <tr>
+                              <th scope="col">customer</th>
+                              <th scope="col">vehicle</th>
+                              <th scope="col">from date</th>
+                                <th scope="col">to date</th>
+                              <th scope="col">period</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                        <t t-foreach="request_details" t-as="details">
+                            <tr>
+                              <td> <t t-esc ="details.partner_id.name" /> </td>
+                              <td><t t-esc ="details.vehicle_id.name" /> </td>
+                              <td><t t-esc ="details.from_date" /> </td>
+                              <td><t t-esc ="details.to_date" /> </td>
+                              <td><t t-esc ="details.period" /> </td>
+                              <td><a t-attf-href="/view/request/{{slug(details)}}"  class="btn btn-secondary"> view </a></td>
+                            </tr>
+                        </t>
+                        </tbody>
+                    </table>
+
+             </form>
+            </div>
+        </t>
+    </template>
+</odoo>

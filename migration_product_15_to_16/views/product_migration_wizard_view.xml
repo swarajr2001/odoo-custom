@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+<!--view for the created model-->
+    <record id="migration_wizard" model="ir.ui.view">
+        <field name="name">wizard form</field>
+        <field name="model">product.migrate</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="new_database"/>
+                            <field name="new_database_url"/>
+                            <field name="new_database_username"/>
+                            <field name="new_database_password" password="True"/>
+                        </group>
+                        <group>
+                            <field name="old_database"/>
+                            <field name="old_database_url"/>
+                            <field name="old_database_username"/>
+                            <field name="old_database_password" password="True"/>
+                        </group>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="action_confirm" type="object" string="Get data" class="btn btn-primary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+<!--action for the created view-->
+    <record id="wizard_form" model="ir.actions.act_window">
+        <field name="name">product data migration</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">product.migrate</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="migration_wizard"/>
+        <field name="target">new</field>
+    </record>
+
+<!--menu item for the created view-->
+    <menuitem id="product_migration" parent="sale.product_menu_catalog" name="Get product data" action="wizard_form"/>
+
+</odoo>

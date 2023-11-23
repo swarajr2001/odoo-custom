@@ -1,0 +1,35 @@
+<odoo>
+    <data>
+
+        <!--added the smart button in the header view of the model sale.order-->
+        <record id="milestone_task_button" model="ir.ui.view">
+            <field name="name">milestone.task.buttons</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <header>
+                    <button class="oe_stat_button" type="object" name="create_project" string="create project"
+                    attrs="{'invisible': [('is_created', '=', True)]}"/>
+                    <button class="oe_stat_button" type="object" name="update_project" string="update project"
+                    attrs="{'invisible': [('is_created', '=', False)]}"/>
+                </header>
+                <sheet>
+                    <field name = "is_created" invisible="1"/>
+                </sheet>
+            </field>
+        </record>
+
+        <!--added milestone an additional field in the order line-->
+        <record model="ir.ui.view" id="sale_order_view_inherit">
+            <field name="name">milestone.task.orderLine</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='name']" position="after">
+                    <field name="milestone"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

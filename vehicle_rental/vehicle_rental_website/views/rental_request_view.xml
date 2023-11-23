@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+<!--this is the form view for creating vehicle request from the website-->
+    <template id="vehicle_request_view" name="form">
+
+        <t t-call="website.layout">
+            <div class="container">
+
+                 <div class="row">
+                    <div class="col">
+                    <label for="name">Customer:</label>
+                    <input type="text" name="customer" class="form-control" t-att-value="details.partner_id.name" readonly="1"/>
+                    </div>
+
+                     <div class="col">
+                    <label for="fromDate">From date:</label>
+                    <input type="date" name="fromDate" class="form-control" t-att-value="details.from_date" readonly="1" />
+                    </div>
+                 </div>
+
+                <div class="row">
+                    <div class="col">
+                    <label for="requestDate">Request date:</label>
+                        <input type="date" name="req_date" class="form-control" t-att-value="details.request_date" readonly="1"/>
+                    </div>
+
+                    <div class="col">
+                    <label for="toDate">To date:</label>
+                    <input type="date" name="toDate"  class="form-control" t-att-value="details.to_date" required="1"/>
+                    </div>
+
+                </div>
+                    <div class="row">
+                    <div class="col">
+                    <label for="vehicle">Vehicle:</label>
+                        <input type="text"  name="vehicle" class="form-control" t-att-value="details.vehicle_id.name" readonly="1"/>
+                    </div>
+
+                    <div class="col">
+                    <label for="period">Period:</label>
+                        <input type="number"  name="period" class="form-control" t-att-value="details.period" readonly="1"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label for="periodType">Period type:</label>
+                        <input type="text"  name="periodType" class="form-control" t-att-value="details.period_id.time" readonly="1"/>
+                    </div>
+                    <div class="col">
+                        <label for="rent">Rent:</label>
+                        <input type="number" name="rent" class="form-control" t-att-value="details.rent" readonly="1"/>
+                    </div>
+                </div>
+
+            </div>
+        </t>
+    </template>
+</odoo>

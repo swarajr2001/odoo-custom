@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!--Action for vehicle detail model-->
+    <record id="vehicle_details_action" model="ir.actions.act_window">
+        <field name="context">{'search_default_state': 1}</field>
+        <field name="name">Vehicle Rental</field>
+        <field name="res_model">vehicle.details</field>
+        <field name="view_mode">tree,form,kanban</field>
+        <field name="help" type="html">
+          <p class="o_view_content_smiling_face">
+              Record not found
+          </p>
+        </field>
+    </record>
+
+    <!--Action for rental request-->
+    <record id="vehicle_rent_request_action" model="ir.actions.act_window">
+        <field name="name">Rental Request</field>
+        <field name="res_model">vehicle.request</field>
+        <field name="view_mode">tree,form,kanban</field>
+        <field name="help" type="html">
+          <p class="o_view_content_smiling_face">
+              Record not found
+          </p>
+        </field>
+    </record>
+
+    <!--menu items for vehicle rental-->
+    <menuitem id="vehicle_menu_root" name=" Rent vehicle"  sequence="10"/>
+
+    <!--menu item for rent request-->
+    <menuitem id="request_first_menu_root" name="Rent request" parent="vehicle_menu_root"  sequence="8"/>
+    <menuitem id="vehicle_third_root" name="Rent request" parent="request_first_menu_root" action="vehicle_rent_request_action" sequence="8"/>
+
+    <!--menu item for rent vehicle-->
+    <menuitem id="vehicle_first_menu_root" name="Create vehicle" parent="vehicle_menu_root"   sequence="18"/>
+    <menuitem id="vehicle_second_menu_root" name="Create vehicle" parent="vehicle_first_menu_root" action="vehicle_details_action" sequence="8"/>
+
+     <!--menu item for vehicle report-->
+    <menuitem id="report_first_menu_root" name="Vehicle rental report" parent="vehicle_menu_root"   sequence="18"/>
+    <menuitem id="report_second_menu_root" name="Vehicle rental report" parent="report_first_menu_root" action="vehicle_report_action" sequence="8"/>
+
+</odoo>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--this is the rendered xml template of the vehicle snippet-->
+
+ <templates>
+    <t t-name="top_requested_vehicle">
+
+        <div t-attf-id="car-{{c_id}}" class="container carousel slide" data-bs-ride="carousel" t-att-data-bs-interval="interval">
+
+            <div class="carousel-inner row w-100 mx-auto" role="listbox">
+
+                <t t-foreach="chunks" t-as="chunk">
+                    <div t-att-class="chunk.is_active ? 'carousel-item active' : 'carousel-item'">
+                        <div class="row">
+                            <t t-foreach="chunk" t-as="d">
+
+                                <div class="card col-3">
+                                        <div class="card-header">
+                                            <span t-esc="d.name"/>
+                                        </div>
+
+                                        <div class="card-body">
+                                            <img src="vehicle_rental/static/src/img/car.png" />
+
+                                        </div>
+
+                                        <div class="card=footer">
+                                         <a t-attf-href="/view-details/{{d.id}}"  class="btn btn-secondary"> view </a>
+                                        </div>
+
+                                </div>
+
+                            </t>
+
+
+                        </div>
+
+                    </div>
+                </t>
+
+            </div>
+
+        </div>
+        <div style="margin-left:50%;">
+            <a t-attf-href="#car-{{c_id}}" data-bs-slide="prev" role="button" aria-label="Previous" title="Previous">
+                <span class="fa fa-chevron-circle-left fa-2x"/>
+            </a>
+             <a t-attf-href="#car-{{c_id}}"  data-bs-slide="next" role="button" aria-label="Next" title="Next">
+                <span class="fa fa-chevron-circle-right fa-2x"/>
+            </a>
+        </div>
+    </t>
+</templates>
+

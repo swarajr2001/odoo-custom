@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!--this template inherits the cart table and adds the bom components after product description -->
+    <template id="cart_inherited" inherit_id="website_sale.cart_lines" name="cart modified">
+         <xpath expr="//td[hasclass('td-product_name')]" position="inside">
+         <t t-set="selected_product" t-value= "request.env['ir.config_parameter'].sudo().get_param('bom_website_cart.choose_product_ids')"/>
+             <t t-if="selected_product=='[]'">
+             </t>
+             <t t-else="">
+                 <t t-set="selected_product_array" t-value="selected_product[1:]"/>
+                 <t t-set="selected_product_arr" t-value="selected_product_array[:-1]"/>
+                 <t t-set="selected_products_array" t-value="selected_product_arr.split(',')"/>
+                    <t t-foreach="selected_products_array" t-as="id">
+                        <t t-if="int(id)==line.product_id.product_tmpl_id.id">
+                            <t t-set="bom_component" t-value="line.product_id.bom_ids.bom_line_ids" /><br/>
+                                <span>Bom components</span><br/>
+                                <t t-foreach="bom_component" t-as = "bom">
+                                    <a t-att-href="bom.product_id.website_url">
+                                        <t t-out="0"/>
+                                        <t t-esc="bom.product_id.name"/>
+                                    </a><br/>
+                                </t>
+                        </t>
+                    </t>
+                 </t>
+         </xpath>
+    </template>
+</odoo>
+
+

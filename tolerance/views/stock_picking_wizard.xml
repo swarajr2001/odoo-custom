@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!--view for the wizard created-->
+    <record id="wizard_form_view" model="ir.ui.view">
+        <field name="name">wizard.view.form</field>
+        <field name="model">picking.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="alert"/>
+                    <field name="stock_picking_id"/>
+                    <field name="tolerance"/>
+                </group>
+                <footer>
+                    <button name="action_confirm"  data-hotkey="v" string="Continue"
+                            class="btn-primary" type="object"/>
+                    <button name="cancel" string="Cancel" class="btn-secondary" special="cancel"
+                            data-hotkey="z"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!--Action for the wizard created-->
+    <record id="wizard_form" model="ir.actions.act_window">
+        <field name="name">Tolerance warning</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">picking.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="wizard_form_view"/>
+        <field name="target">new</field>
+    </record>
+</odoo>

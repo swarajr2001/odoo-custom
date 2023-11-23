@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+<!--inherited sales module view with added button-->
+    <record id="product_template_customizations_form" model="ir.ui.view">
+        	<field name="name">product.template.form.inherit</field>
+        	<field name="model">product.template</field>
+        	<field name="inherit_id" ref="product.product_template_only_form_view"/>
+        	<field name="arch" type="xml">
+            	  <header>
+                    <button  type="object" name="action_view"
+                        icon="fa-gears" string="auto-sale">
+                    </button>
+                  </header>
+        	</field>
+    </record>
+</odoo>

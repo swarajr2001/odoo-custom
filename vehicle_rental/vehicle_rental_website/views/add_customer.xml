@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+<!-- this is the form view for creating the customer-->
+    <template id="add_customer" name="form">
+        <t t-call="website.layout">
+            <div class="container">
+            <form class="form col-6" method="post" action="/create/partner">
+                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+
+                    <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" name="name" class="form-control"/>
+                    </div>
+
+                    <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" name="email" class="form-control"/>
+                    </div>
+
+                    <div class="form-group">
+                    <label for="phone">Phone:</label>
+                    <input type="text" name="phone" class="form-control"/>
+                    </div>
+
+                    <div class="form-group">
+                    <label for="street">Street:</label>
+                    <input type="text" name="street" class="form-control"/>
+                    </div>
+
+                    <div class="form-group">
+                    <label for="country_ids">Country:</label>
+                    <select id="country_ids" class="form-control" name="country">
+                        <t t-foreach="country_ids" t-as="country">
+                            <option t-att-value="country.id">
+                                <t t-esc="country.name"/>
+                            </option>
+                        </t>
+                    </select>
+                    </div>
+
+                    <div class="form-group">
+                    <button type="submit" class="btn btn-primary"> Create</button>
+                    </div>
+                </form>
+
+            </div>
+        </t>
+    </template>
+</odoo>

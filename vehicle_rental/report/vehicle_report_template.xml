@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+<!--this is the template view of the generated pdf report-->
+    <template id="vehicle_request_pdf">
+        <t t-call="web.html_container">
+                <t t-call="web.external_layout">
+                        <h1>Vehicle Rental Report</h1>
+                            <t t-if="from_date">
+                                <div>
+                                    <div> <span> From date :<t t-esc="from_date"/></span></div>
+                                </div>
+                            </t>
+
+                            <t t-if="to_date">
+                                <div>
+                                    <div><span>To date  : <t t-esc="to_date"/></span></div>
+                                </div>
+                            </t>
+
+                            <t t-if="vehicle">
+                                <div>
+                                    <span>Vehicle name  :<t t-esc="vehicle"/> </span>
+                                </div><br/><br/>
+                            </t>
+
+                         <t t-if="not from_date and not to_date and vehicle">
+                                <table class="table" style = "border: solid gray 4px">
+                                     <thead style = "border: solid gray 4px">
+                                        <tr>
+                                            <th>SI.no</th>
+
+                                            <th>Customer name</th>
+
+
+                                            <th>No.of.days</th>
+
+                                            <th>States</th>
+                                        </tr>
+                                     </thead>
+                                 <tbody>
+                                        <t t-set="counter" t-value="1" />
+                                        <t t-foreach="report" t-as = "det">
+
+                                        <tr>
+                                            <td style="text-align: center; vertical-align: middle;"> <span><t t-esc="counter"/></span></td>
+                                            <td style="text-align: center; vertical-align: middle;"> <span><t t-esc = "det.get('customer')" /> </span></td>
+                                            <td style="text-align: center; vertical-align: middle;"> <span><t t-esc = "det.get('period')" /> </span></td>
+                                            <td> <span><t t-esc = "det.get('states')" /> </span></td>
+                                        </tr>
+                                        <t t-set="counter" t-value="counter + 1" />
+                                         </t>
+                                 </tbody>
+                                </table>
+                            </t>
+
+                    <t t-else="">
+
+                        <table class="table" style = "border: solid gray 4px">
+
+
+                             <thead style = "border: solid gray 4px">
+                                    <tr>
+                                        <th>SI.no</th>
+
+                                        <th>Customer name</th>
+
+                                        <th>Model</th>
+
+                                        <th>No.of.days</th>
+
+                                        <th>States</th>
+                                    </tr>
+                             </thead>
+                                <tbody>
+                                    <t t-set="counter" t-value="1" />
+                                    <t t-foreach="report" t-as = "det">
+
+                                            <tr>
+                                                <td style="text-align: center; vertical-align: middle;"> <span><t t-esc="counter"/></span></td>
+                                                <td style="text-align: center; vertical-align: middle;"> <span><t t-esc = "det.get('customer')" /> </span></td>
+                                                <td style="text-align: center; vertical-align: middle;"> <span><t t-esc = "det.get('model')" /></span> </td>
+                                                <td style="text-align: center; vertical-align: middle;"> <span><t t-esc = "det.get('period')" /> </span></td>
+                                                <td style="text-align: center; vertical-align: middle;"> <span><t t-esc = "det.get('states')" /> </span></td>
+                                            </tr>
+                                            <t t-set="counter" t-value="counter + 1" />
+                                    </t>
+                                </tbody>
+                        </table>
+                    </t>
+                </t>
+        </t>
+    </template>
+</odoo>

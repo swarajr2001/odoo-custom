@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+        <record model="ir.module.category" id="vehicle_rental_access">
+             <field name="name">Vehicle rental</field>
+             <field name="description">User access levels for vehicle rental module</field>
+             <field name="sequence">1</field>
+        </record>
+
+        <record id="rental_user_access" model="res.groups">
+            <field name="name">User</field>
+            <field name="category_id" ref="vehicle_rental.vehicle_rental_access"/>
+        </record>
+        <record id="rental_manager_access" model="res.groups">
+            <field name="name">Manager</field>
+            <field name="category_id" ref="vehicle_rental.vehicle_rental_access"/>
+            <field name="implied_ids" eval="[Command.link(ref('rental_user_access'))]"/>
+        </record>
+</odoo>

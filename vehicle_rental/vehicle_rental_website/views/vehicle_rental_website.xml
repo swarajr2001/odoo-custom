@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+<!--vehicle request form in the website-->
+    <template id="vehicle_request_template" name="form">
+
+        <t t-call="website.layout">
+            <div class="container">
+                <form  method="post" action="/create/rentRequest">
+                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+
+                    <div class="row">
+                    <div class="col" style="margin-top:15px;margin-bottom:10px;">
+                        <a t-attf-href="/add/customer"  class="btn btn-secondary"> Add customer </a>
+                    </div>
+                    </div>
+                 <div class="row">
+                    <div class="col">
+                    <label for="name">Customer:</label>
+                    <select id="customer_ids" class="form-control" name="customer">
+                        <t t-foreach="partner_ids" t-as="customer">
+                            <option t-att-value="customer.id">
+                                <t t-esc="customer.name"/>
+                            </option>
+                        </t>
+                    </select>
+                    </div>
+
+                     <div class="col">
+                    <label for="fromDate">From date:</label>
+                    <input type="date" name="fromDate" class="form-control" t-att-value="datetime.datetime.now().strftime('%Y-%m-%d')" id="fromDate" />
+                    </div>
+                 </div>
+
+                <div class="row">
+                    <div class="col">
+                    <label for="requestDate">Request date:</label>
+                        <input type="date" name="req_date" class="form-control" t-att-value="datetime.datetime.now().strftime('%Y-%m-%d')" readonly="1"/>
+                    </div>
+
+                    <div class="col">
+                    <label for="toDate">To date:</label>
+                    <input type="date" name="toDate"  class="form-control" id="toDate" required="1"/>
+                    </div>
+
+                </div>
+                    <div class="row">
+                    <div class="col">
+                    <label for="vehicle">Vehicle:</label>
+                    <select id="vehicle_ids" class="form-control" name="vehicle">
+                        <option id="vehicleOption">select a vehicle</option>
+                    <t t-foreach="vehicle_ids" t-as="vehicle">
+                            <option t-att-value="vehicle.id"  required="1">
+                                <t t-esc="vehicle.name"/>
+                            </option>
+
+                    </t>
+                    </select>
+                    </div>
+
+                    <div class="col">
+                    <label for="period">Period:</label>
+                        <input type="number"  name="period" class="form-control" id="pType" readonly="1"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label for="periodType">Period type:</label>
+                        <select id="period" class="form-control" name="period_type" required="1">
+                                <option> select a period</option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <label for="rent">Rent:</label>
+                        <input type="number" name="rent" class="form-control" id="rent" readonly="1"/>
+                        <input type="number"  name="totalRent" class="form-control" id="demoRent" style="display: none;"/>
+
+                    </div>
+                </div>
+                    <div class="row">
+                        <div class="col" style="margin-top:15px;margin-bottom:10px;">
+                            <button type="submit" class="btn btn-primary"> Create</button>
+                        </div>
+                    </div>
+
+
+                </form>
+            </div>
+        </t>
+    </template>
+</odoo>

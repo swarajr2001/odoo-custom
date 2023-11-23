@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data noupdate="1">
+<!-- run schedular for generating weekly report-->
+       <record id="recurrence_for_weekly_report" model="ir.cron">
+           <field name="name">Recurring weekly report</field>
+           <field name="model_id" ref="model_report_sales"/>
+           <field name="state">code</field>
+           <field name="code">model.create_weekly_report()</field>
+           <field name="user_id" ref="base.user_root"/>
+           <field name="interval_number">7</field>
+           <field name="interval_type">days</field>
+           <field name="numbercall">-1</field>
+       </record>
+
+        <!-- run schedular for generating monthly report-->
+
+        <record id="recurrence_for_monthly_report" model="ir.cron">
+           <field name="name">Recurring monthly report</field>
+           <field name="model_id" ref="model_report_sales"/>
+           <field name="state">code</field>
+           <field name="code">model.create_monthly_report()</field>
+           <field name="user_id" ref="base.user_root"/>
+           <field name="interval_number">30</field>
+           <field name="interval_type">days</field>
+           <field name="numbercall">-1</field>
+       </record>
+
+    </data>
+</odoo>

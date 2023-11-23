@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!--view for the wizard created-->
+    <record id="wizard_form_view" model="ir.ui.view">
+        <field name="name">wizard.view.form</field>
+        <field name="model">wizard.view</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="partner_id" widget="res_partner_many2one"
+                           context="{'res_partner_search_mode': 'customer', 'show_address': 1}"
+                           options="{&quot;always_reload&quot;: True}"/>
+                    <field name="product_id"/>
+                    <field name="quantity"/>
+                    <field name="price"/>
+                </group>
+                <footer>
+                    <button name="action_confirm" id="action_confirm" data-hotkey="v" string="Confirm"
+                            class="btn-primary" type="object"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel" data-hotkey="z"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <!--Action for the wizard created-->
+    <record id="wizard_form" model="ir.actions.act_window">
+        <field name="name">Sale Automation</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">wizard.view</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="wizard_form_view"/>
+        <field name="target">new</field>
+    </record>
+</odoo>

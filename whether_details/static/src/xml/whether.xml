@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates>
+    <t t-name="Whether" owl="1">
+        <t t-if="this.state.is_option_enabled">
+            <div class="d-flex align-items-center m-2">
+                <a class="whether"  href="#" role="button" t-on-click="() => onClick(this)" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                     <i class="fa fa-cloud"/>
+                </a>
+            </div>
+
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header" >
+                    <h3 class="modal-title" id="exampleModalLabel" style="text-align: center;" >WHETHER INFO OF CURRENT LOCATION</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
+                  </div>
+
+                      <t t-if="this.state.values['message'] == 'unknown'">
+                        <div class="modal-body" id="main">
+                          <div class="row">
+                              <div class="col">
+                                  <h2><span>!!!Could not find</span></h2><br> </br>
+                                  <h3>This is the issue with the weather location provided</h3>
+                                </div>
+                            </div>
+                        </div>
+                      </t>
+
+                      <t t-if="this.state.values['message'] == 'error'">
+                          <div class="modal-body" id="main">
+                              <div class="row">
+                                  <div class="col">
+                                      <h2><span>!!!Could not find</span></h2><br> </br>
+                                      <h3>This is the issue with the weather api key provided</h3>
+                                    </div>
+                                </div>
+                          </div>
+                      </t>
+
+                        <t t-if="this.state.values['message'] == 'location'">
+                             <div class="modal-body" id="main">
+
+                                 <div class="row">
+                                     <div class="col">
+                                         <h3> Current location:<span id="location"><t t-esc="this.state.values['location']"/></span>,India</h3>
+                                     </div>
+                                 </div>
+                                <div class="row">
+                                    <h3><span id="date"> <t t-esc="this.state.values['date']"/> </span></h3>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <h3><span id="climate"><t t-esc="this.state.values['cloud']"/></span></h3>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <h3><a class="whether"  href="#" role="button" ><i class="fa fa-cloud "/></a>
+                                            Day:<span id="day"><t t-esc="this.state.values['max_temp']"/>°C</span></h3>
+                                    </div>
+                                    <div class="col">
+                                        <h3><i class="fa fa-arrow-up" aria-hidden="true"> </i>
+                                            Maximum:<span id="max"><t t-esc="this.state.values['day_temp']"/> </span>°C</h3>
+                                    </div>
+                                    <div class="col"><h3><i class="fa fa-arrow-down" aria-hidden="true">
+                                        </i>Minumum:<span id="min"><t t-esc="this.state.values['min_temp']"/> </span>°C</h3>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <h3><a class="sea" href="#" role="button"><i class="fa fa-tint"> </i> </a>
+                                            Sea level:<span id="sealevel"><t t-esc="this.state.values['humidity']"/></span>m</h3>
+                                    </div>
+                                </div>
+                             </div>
+                        </t>
+                </div>
+              </div>
+            </div>
+        </t>
+    </t>
+
+</templates>

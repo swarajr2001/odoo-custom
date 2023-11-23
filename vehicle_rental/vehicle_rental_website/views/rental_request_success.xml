@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+<!--successfully crated window for vehicle request-->
+    <template id="vehicle_request_success" name="success">
+
+        <t t-call="website.layout">
+            <div class="alert alert-success" role="alert">
+                <form  method="post" action="/vehicle">
+                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                  <h4 class="alert-heading">Well done!</h4>
+                  <p>Your request has been successfully created</p>
+                <hr/>
+                  <p class="mb-0">Your corresponding Request id is :<t t-esc="request_id"/></p>
+                    <div class="col" style="margin-top:15px;margin-bottom:10px;">
+                    <button type="submit" class="btn btn-primary"> Back</button>
+                    </div>
+                </form>
+            </div>
+        </t>
+    </template>
+</odoo>

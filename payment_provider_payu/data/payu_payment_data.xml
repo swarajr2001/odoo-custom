@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data noupdate="1">
+        <!--Created the provider in the payment.provider model-->
+        <record id="payment_provider_payu" model="payment.provider">
+            <field name="name">Payu payment provider</field>
+            <field name="code">payu</field>
+            <field name="image_128" type="base64" file="payment_provider_payu/static/icon/payu_icon.png"/>
+            <field name="redirect_form_view_id" ref="redirect_form"/>
+        </record>
+
+        <!--journal item for the created provider-->
+        <record id="payment_method_payu" model="account.payment.method">
+           <field name="name">payu</field>
+           <field name="code">payu</field>
+           <field name="payment_type">inbound</field>
+        </record>
+
+    </data>
+</odoo>
+
+

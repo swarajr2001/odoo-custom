@@ -1,0 +1,145 @@
+<templates>
+    <t t-name="EmployeeDashboard" owl="1">
+        <div style="overflow: auto; height:100%;">
+           <div class="oh_dashboards" style="background:#adc7ec; padding:20px;">
+               <div class="container-fluid my-5 o_hr_dashboard">
+                   <section class="dashboard_main" id="main_section" style="margin-left:50px;">
+                       <div class="col-sm-12 mb-4">
+                           <div class="row">
+                               <div class="col-12 col-sm-12 col-md-8">
+                                  <h2 class="section-header" style="font-weight: bold; font-size: 34px;">EMPLOYEE DASHBOARD</h2><br> </br>
+                               </div>
+                               <div class="col-sm-12 mb-3">
+                                   <div class="row">
+                                       <div class="col-md-2 col-sm-5 product_variants oh-data">
+                                           <div class="oh-card" style="width: 230px; ">
+                                               <div class="oh-card-body">
+                                                   <div class="stat-widget-one zoom" style="background:#99e6ff; padding:20px; border-radius: 25px;" t-on-click="() => onClickAttendance(this)">
+                                                       <div class="stat-icon">
+                                                           <i class="fa fa-users fa-3x"/>
+                                                       </div>
+                                                       <div class="stat-content" >
+                                                           <div class="stat-head">Check In/ Check Out</div>
+                                                           <div class="stat_count">
+                                                               <span id="count">
+                                                                   <div id="variants_count"/>
+                                                               </span>
+                                                           </div>
+                                                       </div>
+                                                   </div>
+                                               </div>
+                                           </div>
+                                       </div>
+                                       <div class="col-md-2 col-sm-5 consu_products oh-data">
+                                           <div class="oh-card" style="width: 200px;">
+                                               <div class="oh-card-body zoom" style="background:#ff4d94; padding:20px; border-radius: 25px;" t-on-click="() => MyInfo(this)">
+                                                   <div class="stat-widget-one">
+                                                       <div class="stat-icon" >
+                                                           <i class="fa fa-info-circle fa-3x"/>
+                                                       </div>
+                                                       <div class="stat-content">
+                                                           <div class="stat-head">My Info</div>
+                                                           <div class="stat_count">
+                                                               <span id="consumable">
+                                                                   <div id="product_consumable"/>
+                                                               </span>
+                                                           </div>
+                                                       </div>
+                                                   </div>
+                                               </div>
+                                           </div>
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+                   </section>
+               </div>
+           </div>
+
+            <div class="row">
+                <div class="col"> </div>
+                <div class="col"> </div>
+                <div class="col">
+                  <label for="filter" style="font-weight: bold; font-size: 15px;">Filter:</label>
+                  <select name="filter" id="cars" style="max-width:30%;">
+                    <option value="all data" t-on-click="AllProject">All data</option>
+                    <option value="month" t-on-click="ThisMonthProjects">This month</option>
+                  </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-5 col-sm-5  col" style="padding: 20px;">
+                        <h2 class="section-header" style="font-weight: bold; font-size: 34px; padding: 20px;">Personal Information</h2><br> </br>
+                        <div class="card-header row">
+
+                            <div class="col">
+                                <img style="max-height: 100%; max-width: 100%;" alt="Logo" t-attf-src="data:image/png;base64,{{this.state.partner['image']}}"/>
+                            </div>
+                            <div class="col">
+                                 <div class="col"><span style="font-weight: bold; font-size: 23px;">Personal info</span></div>
+                                <hr> </hr>
+                                 <div class="col"><span style="font-size: 18px;">Name :</span><span style="font-weight: bold; font-size: 20px;" t-esc="this.state.partner['name']"/></div>
+                                 <div class="col"><span style="font-size: 18px;">Email :</span><span style="font-weight: bold; font-size: 15px;" t-esc="this.state.partner['email']"/></div>
+                                 <div class="col"><span style="font-size: 18px;">Phone :</span><span style="font-weight: bold; font-size: 20px;" t-esc="this.state.partner['phone']"/></div>
+                                 <div class="col"><span style="font-size: 18px;">Job :</span><span style="font-weight: bold; font-size: 20px;" t-esc="this.state.partner['title']"/></div>
+                                 <div class="col"><span style="font-size: 18px;">Department :</span><span style="font-weight: bold; font-size: 20px;" t-esc="this.state.partner['department']"/></div>
+                                <div class="col"><span style="font-size: 18px;">DOB :</span><span style="font-weight: bold; font-size: 20px;"> <t t-esc="this.state.partner['birthday']"/></span></div>
+                                <div class="col"><span style="font-size: 18px;">Experience :</span><span style="font-weight: bold; font-size: 20px;"> <t t-esc="this.state.years"/>years,<t t-esc="this.state.days"/>days</span></div>
+                            </div>
+                        </div>
+                </div>
+
+                <div class="col-md-5 col-sm-5  col" style="padding: 20px;">
+                        <h2 class="section-header" style="font-weight: bold; font-size: 34px; padding: 20px;">Project analysis</h2><br> </br>
+                        <canvas id="acquisitions"/>
+                </div>
+
+                </div>
+                <div class="row">
+                        <div class="col-md-5 col-sm-5  col" style="padding: 20px;">
+                                    <h2 class="section-header" style="font-weight: bold; font-size: 34px; padding: 20px; align: center;">My Leave analysis</h2><br> </br>
+                                    <canvas id="leave"/>
+                        </div>
+                        <div class="col">
+                            <h2 class="section-header" style="font-weight: bold; font-size: 34px; padding: 20px; align: center;">My task analysis</h2><br> </br>
+                            <canvas id="task_details"/>
+                        </div>
+                        <div class="col"> </div>
+
+                </div>
+
+                <div class="row">
+                        <div class="col-md-5 col-sm-5  col" style="padding: 20px;">
+                            <h2 class="section-header" style="font-weight: bold; font-size: 34px; padding: 20px; align: center;">My Payslip Details</h2><br> </br>
+                            <div class="card-header">
+                                <div class="col"><span style="font-size: 18px;">Payslip name : </span><span style="font-weight: bold; font-size: 20px;"> <t t-esc="this.state.payslip['payslip_name']"/></span></div>
+                                <div class="col"><span style="font-size: 18px;">Payslip reference : </span><span style="font-weight: bold; font-size: 20px;"> <t t-esc="this.state.payslip['reference']"/></span></div>
+                                <div class="col"><span style="font-size: 18px;">Contract name : </span><span style="font-weight: bold; font-size: 20px;"> <t t-esc="this.state.payslip['contract_name']"/></span></div>
+                                <div class="col"><span style="font-size: 18px;">Wage  : </span><span style="font-weight: bold; font-size: 20px;"> <t t-esc="this.state.payslip['wage']"/></span></div>
+
+                            </div>
+                        </div>
+                        <div class="col" style="padding: 20px;">
+                            <h2 class="section-header" style="font-weight: bold; font-size: 34px; padding: 20px; align: center;">Upcoming birthday events</h2><br> </br>
+                            <div class="card-header">
+                                    <div class="row">
+                                        <div class="col"><span style="font-size: 25px;font-weight: bold;"> Employee name</span></div>
+                                        <div class="col"><span style="font-size: 25px;font-weight: bold;"> Date of birth</span></div>
+                                        <div class="col"> </div>
+                                    </div>
+                                    <hr> </hr>
+                                <t t-foreach="this.state.upcoming_events" t-as="events" t-key="events['name']">
+                                    <div class="row">
+                                        <div class="col"><span style="font-weight: bold; font-size: 20px;"> <t t-esc="events['name']"/></span></div>
+                                        <div class="col"><span style="font-size: 18px;"> </span><span style="font-weight: bold; font-size: 20px;"> <t t-esc="events['birthday']"/></span></div>
+                                        <div class="col"> </div>
+                                    </div>
+                                </t>
+                            </div>
+                        </div>
+                </div>
+        </div>
+    </t>
+</templates>
