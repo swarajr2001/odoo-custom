@@ -49,14 +49,12 @@ class ProductTemplate(models.TransientModel):
             for item in existing_product_data:
                 modified_dict = {key: value for key, value in item.items() if key != 'id'}
                 odoo16_data.append(modified_dict)
-            print("odoo16", odoo16_data)
 
             odoo15_data = []
 
             for item in product_data:
                 modified_dict = {key: value for key, value in item.items() if key != 'id' and key != 'image_1920'}
                 odoo15_data.append(modified_dict)
-            print("odoo15", odoo15_data)
             new = []
             for data in odoo15_data:
                 if data not in odoo16_data:

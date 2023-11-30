@@ -43,86 +43,86 @@ class SalesReport(models.Model):
 
     def create_monthly_report(self):
         """function called by schedular to create monthly report"""
+        today = date.today()
         record = self.env['report.sales'].search([('duration', '=', 'monthly')])
+        record = record.filtered(lambda x: x.to_date == False or x.to_date >= today)
         self.create_sales_report(data=record)
 
     def create_weekly_report(self):
         """function called by schedular to create weekly report"""
+        today = date.today()
         record = self.env['report.sales'].search([('duration', '=', 'weekly')])
+        record = record.filtered(lambda x: x.to_date == False or x.to_date >= today)
         self.create_sales_report(data=record)
 
     def create_sales_report(self, data):
         """function when called creates the weekly report"""
-        print("function called", data)
         record = data
         today = date.today()
-        # from_email = self.env.user
-        # print(from_email)
         for rec in record:
-            if rec.to_date >= today:
-                if rec.duration == 'weekly':
-                    from_date = today - timedelta(7)
-                    to_date = today
-                if rec.duration == 'monthly':
-                    from_date = today - timedelta(30)
-                    to_date = today
-                query = """select res_partner.name as customer ,crm_team.name::json->'en_US' as sales_team,sale_order.user_id as sales_person,
-                               date_order as order_date, sale_order.name as names, state as state,
-                               amount_total as total from sale_order
-                               join res_partner on sale_order.partner_id = res_partner.id
-                               join crm_team on sale_order.team_id = crm_team.id"""
-                params = []
-                flag = """"""
-                if not rec.from_date:
-                    flag = """ where """
-                if rec.from_date is not False:
-                    query = query + """ where sale_order.date_order >= %s """
-                    params.append(rec.from_date)
-                    flag = """ and """
-                if rec.to_date is not False:
-                    query = query + flag + """sale_order.date_order <=  %s"""
-                    params.append(rec.to_date)
-                    flag = """ and """
-                if rec.sales_team_id.id is not False:
-                    query = query + flag + """sale_order.team_id = %s"""
-                    params.append(rec.sales_team_id.id)
-                query = query + """ order by order_date"""
-                self.env.cr.execute(query, tuple(params))
-                report = self.env.cr.dictfetchall()
-                print("data", report)
-                customers = rec.select_customer_ids
-                emails = ""
-                for record in customers:
-                    if record.email:
-                        emails = emails + str(record.email) + ","
-                print(emails)
-                data = {'report': report,
-                        'period': rec.duration,
-                        'from_date': from_date,
-                        'to_date': to_date,
-                        }
+            # if rec.to_date >= today:
+            if rec.duration == 'weekly':
+                from_date = today - timedelta(7)
+                to_date = today
+            if rec.duration == 'monthly':
+                from_date = today - timedelta(30)
+                to_date = today
+            query = """select res_partner.name as customer ,crm_team.name::json->'en_US' as sales_team,sale_order.user_id as sales_person,
+                           date_order as order_date, sale_order.name as names, state as state,
+                           amount_total as total from sale_order
+                           join res_partner on sale_order.partner_id = res_partner.id
+                           join crm_team on sale_order.team_id = crm_team.id"""
+            params = []
+            flag = """"""
+            if not rec.from_date:
+                flag = """ where """
+            if rec.from_date is not False:
+                query = query + """ where sale_order.date_order >= %s """
+                params.append(rec.from_date)
+                flag = """ and """
+            if rec.to_date is not False:
+                query = query + flag + """sale_order.date_order <=  %s"""
+                params.append(rec.to_date)
+                flag = """ and """
+            if rec.sales_team_id.id is not False:
+                query = query + flag + """sale_order.team_id = %s"""
+                params.append(rec.sales_team_id.id)
+            query = query + """ order by order_date"""
+            self.env.cr.execute(query, tuple(params))
+            report = self.env.cr.dictfetchall()
+            customers = rec.select_customer_ids
+            emails = ""
+            for record in customers:
+                if record.email:
+                    emails = emails + str(record.email) + ","
+            print(emails)
+            data = {'report': report,
+                    'period': rec.duration,
+                    'from_date': from_date,
+                    'to_date': to_date,
+                    }
 
-                sales_report_pdf = self.env.ref('sales_report.action_report_sales_request')
+            sales_report_pdf = self.env.ref('sales_report.action_report_sales_request')
 
-                data_values = base64.b64encode(
-                    self.env['ir.actions.report'].sudo()._render_qweb_pdf(
-                        sales_report_pdf, data=data)[0])
+            data_values = base64.b64encode(
+                self.env['ir.actions.report'].sudo()._render_qweb_pdf(
+                    sales_report_pdf, data=data)[0])
 
-                ir_values = {
-                    'name': "sales Report",
-                    'type': 'binary',
-                    'datas': data_values,
-                    'store_fname': data_values,
-                    'mimetype': 'application/x-pdf',
-                    'res_model': 'report.sales',
-                }
-                data_id = self.env['ir.attachment'].create(ir_values)
-                template = self.env.ref('sales_report.sales_email_template')
-                template.attachment_ids = [(6, 0, [data_id.id])]
-                email_values = {
-                    'email_to': emails,
-                    'subject': f'{rec.duration} sales Report from {from_date} to {to_date}'
-                }
+            ir_values = {
+                'name': "sales Report",
+                'type': 'binary',
+                'datas': data_values,
+                'store_fname': data_values,
+                'mimetype': 'application/x-pdf',
+                'res_model': 'report.sales',
+            }
+            data_id = self.env['ir.attachment'].create(ir_values)
+            template = self.env.ref('sales_report.sales_email_template')
+            template.attachment_ids = [(6, 0, [data_id.id])]
+            email_values = {
+                'email_to': emails,
+                'subject': f'{rec.duration} sales Report from {from_date} to {to_date}'
+            }
 
-                template.send_mail(self.id, email_values=email_values, force_send=True)
-                template.attachment_ids = [(3, data_id.id)]
+            template.send_mail(self.id, email_values=email_values, force_send=True)
+            template.attachment_ids = [(3, data_id.id)]

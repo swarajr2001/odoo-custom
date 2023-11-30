@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+<!--action for the pdf report-->
+    <record id="action_report_advanced_stock" model="ir.actions.report">
+            <field name="name">Advanced stock reports</field>
+            <field name="model">advanced.stock</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">advanced_stock_move_report.advance_stock_report</field>
+            <field name="report_file">advanced_stock_move_report.advance_stock_report</field>
+            <field name="binding_type">report</field>
+    </record>
+</odoo>

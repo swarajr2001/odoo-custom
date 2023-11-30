@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!--view for the wizard created-->
+    <record id="advanced_stock_report_view" model="ir.ui.view">
+        <field name="name">stock.move.view.report</field>
+        <field name="model">advanced.stock</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <field name="product_id" />
+                        <field name="form_date"/>
+                        <field name="to_date"/>
+                        <field name="stock_move_status"/>
+                    </group>
+                    <group>
+                        <field name="from_location_id" />
+                        <field name="destination_id"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="pdf_generate" data-hotkey="v" string="Generate PDF"
+                            class="btn-primary" type="object"/>
+                    <button name="excel_generate" data-hotkey="j" string="Generate Excel"
+                            class="btn-primary" type="object"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel" data-hotkey="z"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!--Action for the wizard created-->
+    <record id="advanced_stock_report_action" model="ir.actions.act_window">
+        <field name="name">Advanced stock move report</field>
+        <field name="res_model">advanced.stock</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="advanced_stock_report_view"/>
+        <field name="target">new</field>
+    </record>
+
+    <!--menu item for the created wizard view-->
+    <menuitem id="advanced_stock_report" name="Advanced stock move report" parent="stock.menu_warehouse_report"
+              action="advanced_stock_report_action" sequence="8"/>
+
+</odoo>

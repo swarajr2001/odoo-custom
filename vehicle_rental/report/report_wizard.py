@@ -36,7 +36,7 @@ class ReportWizard(models.TransientModel):
         vehicle_id = self.vehicle_name.id
         query = """select res_partner.name as customer , vehicle_details.name as model,
                                                         period,states from vehicle_request join 
-                                                        res_partner on vehicle_request.partner_id = res_partner.id
+                                                            res_partner on vehicle_request.partner_id = res_partner.id
                                                         join vehicle_details on 
                                                         vehicle_details.id = vehicle_request.vehicle_id"""
         params = []

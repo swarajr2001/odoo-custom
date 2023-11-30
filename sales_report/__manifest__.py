@@ -16,7 +16,7 @@
     'report/sales_report_action.xml',
     'data/sales_report_sequence.xml',
     'views/sales_report_view.xml',
-'data/sales_report_email_template.xml',
+    'data/sales_report_email_template.xml',
 
     ],
     'application': True,

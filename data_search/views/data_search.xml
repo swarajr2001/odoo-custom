@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <!--from view of the data search model-->
+    <record id="data_search_form_view" model="ir.ui.view">
+        <field name="name">Data.search.form</field>
+        <field name="model">data.search</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button class="btn-primary" type="object" string="Search" name="data_search" />
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="value_entered"/>
+                            <field name="model_ids" widget="many2many_tags" attrs="{'invisible': [('avoiding_model_ids','!=',[])]}"/>
+                            <field name="field_id" domain="[('model_id', '=', model_ids)]" attrs="{'invisible': [('model_ids','=',[])]}"/>
+                            <field name="avoiding_model_ids" widget="many2many_tags" attrs="{'invisible': [('model_ids','!=',[])]}"/>
+                        </group>
+                        <group>
+                        </group>
+                    </group>
+                    <field name="search_line_ids">
+                        <tree editable="bottom" create="false" delete="false">
+                            <field name="model_name" readonly="1"/>
+                            <field name="field_name" readonly="1"/>
+                            <field name="value" readonly="1"/>
+                            <button name="view_model" string="view" type="object"/>
+                        </tree>
+                    </field>
+
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+      <!--Actions for the data search request-->
+    <record id="data_search_action" model="ir.actions.act_window">
+        <field name="name">Data Search</field>
+        <field name="res_model">data.search</field>
+        <field name="view_mode">form</field>
+    </record>
+
+    <!--Menu for the data search-->
+    <menuitem id="parent_search" name="Data Search"/>
+    <menuitem id="data_first_menu_root" name="Data Search"  sequence="18" parent="parent_search"/>
+    <menuitem id="data_second_menu_root" name="search" parent="data_first_menu_root" action="data_search_action" sequence="8"/>
+
+
+</odoo>

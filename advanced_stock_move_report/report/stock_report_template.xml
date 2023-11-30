@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+<!--this is the template view of the generated pdf report-->
+    <template id="advance_stock_report">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <h1>Advanced stock Report</h1><br> </br>
+                <t t-if="from_date">
+                    <div>
+                        <div> <span style="font-size: 18px;"> From date :<t t-esc="from_date"/></span></div>
+                    </div>
+                </t>
+
+                <t t-if="to_date">
+                    <div>
+                        <div><span style="font-size: 18px;">To date  : <t t-esc="to_date"/></span></div>
+                    </div>
+                </t>
+                <t t-if="product_id">
+                    <div>
+                        <div><span style="font-size: 18px;">To date  : <t t-esc="product_id"/></span></div>
+                    </div>
+                </t>
+
+                <t t-if="state">
+                    <div>
+                        <div><span style="font-size: 18px;">Stock move status: <t t-esc="state"/></span></div>
+                    </div>
+                </t>
+                <br> </br>
+                <t t-if="state and not product_id">
+                    <table class="table" style = "border: solid gray 4px">
+                     <thead style = "border: solid gray 4px">
+                        <tr>
+                            <th>SI.no</th>
+                            <th>Product Name</th>
+                            <th>Quantity</th>
+                            <th>Source location</th>
+                            <th>Destination location</th>
+                            <th >Date</th>
+                        </tr>
+                     </thead>
+                    <tbody>
+                        <t t-set="counter" t-value="1" />
+                        <t t-foreach="report" t-as = "det">
+                            <tr>
+                                <td style="text-align: center; vertical-align: middle;"> <span><t t-esc="counter"/></span></td>
+                                <td style="text-align: center; vertical-align: middle;"> <span><t t-esc = "det.get('name')" /> </span></td>
+                                <td style="text-align: center; vertical-align: middle;"> <span><t t-esc = "det.get('Quantity')" /></span> </td>
+                                <td style="text-align: center; vertical-align: middle;"> <span><t t-esc = "det.get('Source location')" /> </span></td>
+                                <td style="text-align: center; vertical-align: middle;"> <span><t t-esc = "det.get('Destination location')" /> </span></td>
+                                <td style="vertical-align: middle;  text-align: center;"> <span><t t-esc = "det.get('Date')" /> </span></td>
+                            </tr>
+                        <t t-set="counter" t-value="counter + 1" />
+                        </t>
+
+                    </tbody>
+                </table>
+                </t>
+
+                  <t t-if="state and product_id">
+                    <table class="table" style = "border: solid gray 4px">
+                     <thead style = "border: solid gray 4px">
+                        <tr>
+                            <th>SI.no</th>
+                            <th>Quantity</th>
+                            <th>Source location</th>
+                            <th>Destination location</th>
+                            <th >Date</th>
+                        </tr>
+                     </thead>
+                    <tbody>
+                        <t t-set="counter" t-value="1" />
+                        <t t-foreach="report" t-as = "det">
+                            <tr>
+                                <td style="text-align: center; vertical-align: middle;"> <span><t t-esc="counter"/></span></td>
+                                <td style="text-align: center; vertical-align: middle;"> <span><t t-esc = "det.get('Quantity')" /></span> </td>
+                                <td style="text-align: center; vertical-align: middle;"> <span><t t-esc = "det.get('Source location')" /> </span></td>
+                                <td style="text-align: center; vertical-align: middle;"> <span><t t-esc = "det.get('Destination location')" /> </span></td>
+                                <td style="vertical-align: middle;  text-align: center;"> <span><t t-esc = "det.get('Date')" /> </span></td>
+                            </tr>
+                        <t t-set="counter" t-value="counter + 1" />
+                        </t>
+
+                    </tbody>
+                </table>
+                </t>
+
+                <t t-elif="product_id and not state">
+                    <table class="table" style = "border: solid gray 4px">
+                     <thead style = "border: solid gray 4px">
+                        <tr>
+                            <th>SI.no</th>
+                            <th>Quantity</th>
+                            <th>Source location</th>
+                            <th>Destination location</th>
+                            <th >Date</th>
+                            <th>Status</th>
+                        </tr>
+                     </thead>
+                    <tbody>
+                        <t t-set="counter" t-value="1" />
+                        <t t-foreach="report" t-as = "det">
+                            <tr>
+                                <td style="text-align: center; vertical-align: middle;"> <span><t t-esc="counter"/></span></td>
+                                <td style="text-align: center; vertical-align: middle;"> <span><t t-esc = "det.get('Quantity')" /></span> </td>
+                                <td style="text-align: center; vertical-align: middle;"> <span><t t-esc = "det.get('Source location')" /> </span></td>
+                                <td style="text-align: center; vertical-align: middle;"> <span><t t-esc = "det.get('Destination location')" /> </span></td>
+                                <td style="vertical-align: middle;  text-align: center;"> <span><t t-esc = "det.get('Date')" /> </span></td>
+                                <td style="vertical-align: middle; text-align: center;"> <span><t t-esc = "det.get('status')" /> </span></td>
+                            </tr>
+                        <t t-set="counter" t-value="counter + 1" />
+                        </t>
+
+                    </tbody>
+                </table>
+                </t>
+
+                <t t-else=" ">
+                <table class="table" style = "border: solid gray 4px">
+                     <thead style = "border: solid gray 4px">
+                        <tr>
+                            <th>SI.no</th>
+                            <th>Product Name</th>
+                            <th>Quantity</th>
+                            <th>Source location</th>
+                            <th>Destination location</th>
+                            <th >Date</th>
+                            <th>Status</th>
+                        </tr>
+                     </thead>
+                    <tbody>
+                        <t t-set="counter" t-value="1" />
+                        <t t-foreach="report" t-as = "det">
+                            <tr>
+                                <td style="text-align: center; vertical-align: middle;"> <span><t t-esc="counter"/></span></td>
+                                <td style="text-align: center; vertical-align: middle;"> <span><t t-esc = "det.get('name')" /> </span></td>
+                                <td style="text-align: center; vertical-align: middle;"> <span><t t-esc = "det.get('Quantity')" /></span> </td>
+                                <td style="text-align: center; vertical-align: middle;"> <span><t t-esc = "det.get('Source location')" /> </span></td>
+                                <td style="text-align: center; vertical-align: middle;"> <span><t t-esc = "det.get('Destination location')" /> </span></td>
+                                 <td style="vertical-align: middle;  text-align: center;"> <span><t t-esc = "det.get('Date')" /> </span></td>
+                                <td style="vertical-align: middle; text-align: center;"> <span><t t-esc = "det.get('status')" /> </span></td>
+
+                            </tr>
+                        <t t-set="counter" t-value="counter + 1" />
+                        </t>
+
+                    </tbody>
+                </table>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

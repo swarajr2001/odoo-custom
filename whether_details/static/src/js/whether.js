@@ -37,7 +37,6 @@ class Whether extends Component {
                 .then(response => response.json())
                 .then(function(data) {
                  var datas = data
-                 console.log(datas)
                  updateValue(datas)
                 })
             }
