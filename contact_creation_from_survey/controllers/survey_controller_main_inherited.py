@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from odoo.http import Controller, request, route
-from odoo import http
+from odoo.http import request
 from odoo.addons.survey.controllers.main import Survey
 
 

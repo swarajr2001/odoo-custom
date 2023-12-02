@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+    <record id="website_email_manager" model="mail.template">
+        <field name="name">Website pay mail</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="description">send an email to the sales managers with the following information</field>
+        <field name="body_html" type="html">
+
+            <table border="0" cellpadding="0" cellspacing="0"
+                   style="padding-top: 16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;">
+                <tr>
+                    <td align="center">
+                        <table border="0" cellpadding="0" cellspacing="0" width="590"
+                               style="padding: 24px; background-color: white; color: #454748; border-collapse:separate;">
+                            <tbody>
+                                <!-- HEADER -->
+                                <tr>
+                                    <td align="center" style="min-width: 590px;">
+                                        <table border="0" cellpadding="0" cellspacing="0" width="100%"
+                                               style="background-color: white; padding: 0; border-collapse:separate;">
+                                            <tr>
+                                                <td valign="middle">
+                                                    <span style="font-size: 10px;">Your Quotation</span>
+                                                    <br/>
+                                                    <span style="font-size: 20px; font-weight: bold;"
+                                                          t-out="object.name or ''">Quotation Id
+                                                    </span>
+                                                </td>
+                                                <td valign="middle" align="right">
+                                                    <img t-attf-src="/logo.png?company={{ object.company_id.id }}"
+                                                         style="padding: 0px; margin: 0px; height: 48px;"
+                                                         t-att-alt="object.company_id.name"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" style="text-align:center;">
+                                                    <hr width="100%"
+                                                        style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin:4px 0px 32px 0px;"/>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <!-- CONTENT -->
+                                <tr>
+                                    <td style="min-width: 590px;">
+                                        <table border="0" cellpadding="0" cellspacing="0" width="590"
+                                               style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                            <tr>
+                                                <td valign="top" style="font-size: 13px;">
+                                                    <div>
+                                                        <p>
+                                                            hello there,
+                                                            <br/>
+                                                            <br/>
+                                                            your team has been given the sale order by
+                                                            <b>
+                                                                <t t-esc="object.partner_id.name"/>
+                                                            </b>
+                                                            of order id
+                                                            <b>
+                                                                <t t-esc="object.name"/>
+                                                            </b>
+                                                            by a total of
+                                                            <b>
+                                                                <t t-esc="sum(object.order_line.mapped('price_subtotal'))"/>
+                                                            </b>
+                                                            <br/>
+                                                            <table cellpadding="0" cellspacing="0" width="590"
+                                                                   style="background-color: white; color: #454748; border: solid gray 2px">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <td style="font-weight: bold; font-size: 17px; padding: 5px;">
+                                                                            Product
+                                                                        </td>
+                                                                        <td style="font-weight: bold; font-size: 17px; padding: 5px">
+                                                                            Quantity
+                                                                        </td>
+                                                                        <td style="font-weight: bold; font-size: 17px; padding: 5px">
+                                                                            Unit price
+                                                                        </td>
+                                                                        <td style="font-weight: bold; font-size: 17px; padding: 5px">
+                                                                            Subtotal
+                                                                        </td>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <t t-foreach="object.order_line" t-as="line">
+                                                                        <tr>
+                                                                            <td style="padding: 5px;">
+                                                                                <span>
+                                                                                    <t t-esc="line.product_template_id.name"/>
+                                                                                </span>
+                                                                            </td>
+                                                                            <td style="padding: 5px;">
+                                                                                <span>
+                                                                                    <t t-esc="line.product_uom_qty"/>
+                                                                                </span>
+                                                                            </td>
+                                                                            <td style="padding: 5px;">
+                                                                                <span>
+                                                                                    <t t-esc="line.price_unit"/>
+                                                                                </span>
+                                                                            </td>
+                                                                            <td style="padding: 5px;">
+                                                                                <span>
+                                                                                    <t t-esc="line.price_subtotal"/>
+                                                                                </span>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </t>
+                                                                </tbody>
+                                                            </table>
+                                                            <br/>
+                                                            <a class='btn btn-primary'
+                                                               t-attf-href="/web?#id={{object.id}}&amp;view_type=form&amp;model=sale.order"
+                                                               style="display: inline-block;padding: 10px 20px;background-color: #4CAF50;color: #FFFFFF;text-decoration: none;border-radius: 5px;transition: background-color 0.3s ease;">
+                                                                View Sales Order
+                                                            </a>
+                                                            <br/>
+                                                        </p>
+                                                        Regards,
+
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <!-- FOOTER -->
+                                <tr>
+                                    <td align="center" style="min-width: 590px; padding: 0 8px 0 8px; font-size:11px;">
+                                        <hr width="100%"
+                                            style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 4px 0px;"/>
+                                        <b t-out="object.company_id.name or ''">My Company (San Francisco)</b>
+                                        <br/>
+                                        <div style="color: #999999;">
+                                            <t t-out="object.company_id.phone or ''">+1 650-123-4567</t>
+                                            <t t-if="object.company_id.email">
+                                                |
+                                                <a t-attf-href="'mailto:%s' % {{ object.company_id.email }}"
+                                                   style="text-decoration:none; color: #999999;"
+                                                   t-out="object.company_id.email or ''">info@yourcompany.com
+                                                </a>
+                                            </t>
+                                            <t t-if="object.company_id.website">
+                                                |
+                                                <a t-attf-href="'%s' % {{ object.company_id.website }}"
+                                                   style="text-decoration:none; color: #999999;"
+                                                   t-out="object.company_id.website or ''">http://www.example.com
+                                                </a>
+                                            </t>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <!-- POWERED BY -->
+                <tr>
+                    <td align="center" style="min-width: 590px;">
+                        Powered by
+                        <a target="_blank" href="https://www.odoo.com?utm_source=db&amp;utm_medium=email"
+                           style="color: #875A7B;">Odoo
+                        </a>
+                    </td>
+                </tr>
+            </table>
+        </field>
+        <field name="lang">{{ object.partner_id.lang }}</field>
+        <field name="auto_delete" eval="True"/>
+    </record>
+    </data>
+</odoo>
+
+
+
+

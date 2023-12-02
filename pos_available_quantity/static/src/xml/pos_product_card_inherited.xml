@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <!--inherited the ProductItem and added Available Qty in products-->
+   <t t-name="ProductItem" t-inherit="point_of_sale.ProductItem" t-inherit-mode="extension" owl="1">
+     <xpath expr="//t[@t-esc='price']" position="after">
+          <br/>
+         <div>
+            <span>Available Qty: <t t-esc="props.product.pos_stock_product_quantity"/></span>
+         </div>
+      </xpath>
+   </t>
+</templates>

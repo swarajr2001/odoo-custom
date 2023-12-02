@@ -95,7 +95,6 @@ class SalesReport(models.Model):
             for record in customers:
                 if record.email:
                     emails = emails + str(record.email) + ","
-            print(emails)
             data = {'report': report,
                     'period': rec.duration,
                     'from_date': from_date,

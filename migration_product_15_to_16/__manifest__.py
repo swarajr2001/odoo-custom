@@ -11,7 +11,7 @@
     """,
     'data': [
             'security/ir.model.access.csv',
-            'views/product_migration_wizard_view.xml.xml',
+            'views/product_migration_wizard_view.xml',
     ],
     'application': True,
 

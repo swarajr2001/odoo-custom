@@ -4,6 +4,7 @@ import Registries from 'point_of_sale.Registries';
 
 const ProductDiscount = (ProductScreen) => class ProductDiscount extends ProductScreen{
       async _onClickPay() {
+            console.log(this.env.pos,"jiiiiiii")
            const product_list = []
            var max_discount_amount = this.env.pos.config.discount_limit
            var order_line = this.env.pos.get_order().orderlines
