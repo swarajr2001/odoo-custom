@@ -18,6 +18,8 @@
 
     "assets":{
             "point_of_sale.assets": [
+                    'pos_combo_product/static/src/xml/combo_limit.xml',
+                    'pos_combo_product/static/src/js/popup_limit.js',
                     'pos_combo_product/static/src/xml/product_pop_up.xml',
                     'pos_combo_product/static/src/js/combo_pop_up.js',
                     'pos_combo_product/static/src/js/product_click.js',

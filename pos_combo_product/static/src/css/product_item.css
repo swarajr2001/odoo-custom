@@ -9,3 +9,42 @@
   }
 
 
+
+.combo{
+   height:auto;
+   width: 70%;
+
+}
+
+
+
+.header{
+height: 80px;
+}
+
+.card-img-top{
+height:80%;
+width:60%;
+}
+
+.grid-container {
+  overflow:auto;
+  scrollbar-width: thin;
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  background-color: #2196F3;
+  gap: 10px;
+
+}
+
+.grid-item {
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.8);
+  padding: 10px;
+  font-size: 15px;
+  text-align: center;
+  width:auto;
+  height: 140px;
+}
+
+

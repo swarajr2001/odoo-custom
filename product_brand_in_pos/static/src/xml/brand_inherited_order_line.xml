@@ -4,7 +4,6 @@
     <t t-name="inherited_order_line" t-inherit="point_of_sale.Orderline"
        t-inherit-mode="extension" owl="1">
         <xpath expr="//span[hasclass('product-name')]" position="after">
-            <t t-log="props"/>
             <t t-if="props.line.product.brand">
                 <div>
                     <span>Brand:</span>
