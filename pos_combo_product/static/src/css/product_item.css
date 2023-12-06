@@ -1,22 +1,7 @@
-.ribbon {
-  position:absolute;
-  top:0;
-  right:0;
-  background-color:MediumSeaGreen   ;
-  height:19px;
-  width:120px;
-  font-weight: bold;
-  }
-
-
-
 .combo{
    height:auto;
    width: 70%;
-
 }
-
-
 
 .header{
 height: 80px;
@@ -48,3 +33,34 @@ width:60%;
 }
 
 
+.ribbon{
+      position: absolute;
+      background-color: #a2ed82;
+      color: #000000;
+      padding: 5px 10px 5px 0px;
+      text-align:center;
+      top: 50px;
+      width: 100%;
+    }
+
+
+
+.product-img {
+    position: relative;
+}
+
+.ribbon1 {
+    position: absolute;
+    text-align:center;
+    top: 50px;
+    width: 80%;
+    background-color: #a2ed82;
+    color: #000000;
+    padding: 5px 10px 5px 0px;
+    font-size: 12px;
+    z-index: 1;
+}
+
+.card-img-top {
+    max-width: 100%;
+}

@@ -6,15 +6,15 @@
                 <div class="popup  combo" style="background-color: #7bcedb;">
 
                     <header class="header">
-                        <div class="button close highlight"  t-on-click="()=>this.Close(this)">
-                                <span>Exit</span>
+                        <div class="button close"  t-on-click="()=>this.Close(this)">
+                                <span><i class="fa fa-close" style="font-size:45px"/></span>
                         </div>
                          <p class="title">
                             <t t-esc="props.title" />
                         </p>
                     </header>
 
-                    <div>
+                    <div class="scrollable-grid" style="overflow-y: auto; max-height: 60vh;">
                         <t t-foreach="props.data" t-as="item" t-key="item.id">
                             <div class="row">
                                 <div class="product-name" style="text-center">
@@ -38,9 +38,9 @@
                                            <span>Optional category <t t-esc="item.pos_category"/>(choose <t t-esc="item.item_count"/> item)</span>
                                             <div class="grid-container">
                                                  <t t-foreach="item.products" t-as="product" t-key="product.product_id">
-                                                        <div class="product-img grid-item">
-                                                            <span t-if="state.products.includes(product.product_id)">Selected</span>
-                                                           <img class="card-img-top" t-attf-src="data:image/jpg;base64,{{product['product_image']}} " t-on-click="(ev)=>{ this.ComboClicked(ev,product);}"/>
+                                                        <div class="product-img grid-item" t-on-click="(ev)=>{ this.ComboClicked(ev,product);}">
+                                                            <div class="ribbon1" t-if="state.products.includes(product.product_id)">Selected</div>
+                                                           <img class="card-img-top" t-attf-src="data:image/jpg;base64,{{product['product_image']}} "/>
                                                             <br/><t t-esc="product.product_name"/>
                                                         </div>
                                                 </t>

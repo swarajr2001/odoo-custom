@@ -10,11 +10,44 @@ export class PosComboPopUp extends AbstractAwaitablePopup{
     this.state = useState({
             products: [],
             check_count: [],
+            count: 0,
         });
     }
+    getPayload() {
+            return this.state.check_count;
+        }
 
      ComboClicked(ev,product){
-        console.log("hii")
+        let occurrence = 0;
+
+        for (const val of this.state.check_count) {
+          if (val.category == product.pos_category) {
+            occurrence++;
+          }
+        }
+
+        this.state.count = product.max_count
+
+        const productId = product.product_id;
+        const isSelected = this.state.products.includes(productId);
+
+        if(this.state.count <= occurrence || isSelected){
+            const productId = product.product_id;
+            const isSelected = this.state.products.includes(productId);
+            if (isSelected) {
+                this.state.products = this.state.products.filter(id => id !== productId);
+                this.state.check_count = this.state.check_count.filter(item =>
+                item.category !== product.pos_category || item.product !== product.product_name || item.product_id !== product.product_id);
+            } else {
+                const { confirmed } = this.showPopup('ComboLimit', {
+                        title:'Combo alert',
+                        body: 'You have already selected maximum item for this category!',
+                        confirmText: 'Ok',
+                    });
+            }
+        }
+
+        else{
         let val = {}
         val['product_id'] = product.product_id
         val['category'] = product.pos_category
@@ -39,46 +72,40 @@ export class PosComboPopUp extends AbstractAwaitablePopup{
         } else {
             this.state.products.push(productId);
         }
-        console.log("Selected Products: ", this.state.products);
 
-        let count = 0;
 
-        for (const val of this.state.check_count) {
-          if (val.category == product.pos_category) {
-            count++;
-          }
+
         }
-
-        if(count > product.max_count){
-            const index = this.state.products.indexOf(product.product_id);
-            this.state.products.splice(index, 1)
-            const { confirmed } = this.showPopup('ComboLimit', {
-                        title:'Combo alert',
-                        body: 'You have already selected maximum item for this category!',
-                        confirmText: 'Ok',
-                    });
-        }
-
-        console.log("current-state",this.state.products)
-
     }
 
     Confirm(ev){
-      console.log("confirm", this.state.products)
       var order = this.env.pos.get_order();
-      for(let val in this.props.data){
-          if(this.props.data[val].is_required == true){
-              for(let product in this.props.data[val].products){
-                this.state.products.push(this.props.data[val].products[product].product_id);
+         for(let val in this.props.data){
+              if(this.props.data[val].is_required == true){
+                  for(let product in this.props.data[val].products){
+                    this.state.products.push(this.props.data[val].products[product].product_id);
+                  }
               }
           }
-      }
+
+
+
+    this.props.this_product.combo_data = this.state.check_count;
+
+      console.log(this.props.this_product,"this")
 
       order.add_product(this.props.this_product)
-      var products = this.state.products
-      for(let product in products){
-         order.add_product(this.env.pos.db.product_by_id[products[product]]);
-      }
+
+
+
+
+//
+//      order.add_product(this.props.this_product)
+//      var products = this.state.products
+//      for(let product in products){
+//         order.add_product(troduct]]);
+//      }his.env.pos.db.product_by_id[products[p
+
       this.confirm();
     }
 
@@ -88,7 +115,7 @@ export class PosComboPopUp extends AbstractAwaitablePopup{
     }
 
 }
+
 PosComboPopUp.template = 'PosComboPopUp';
 Registries.Component.add(PosComboPopUp);
-
 

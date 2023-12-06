@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates>
+    <!--inherited the template Orderline and added the brand field in the order line of pos -->
+    <t t-name="inherited_order_line" t-inherit="point_of_sale.Orderline"
+       t-inherit-mode="extension" owl="1">
+        <xpath expr="//ul[hasclass('info-list')]" position="after">
+            <t t-if="props.line.product.combo_data">
+                <div>
+                    <span class="oderLines">combo products:</span><br/>
+                        <t t-foreach="props.line.product.combo_data" t-as="datas" t-key="datas.product_id">
+                            <ul>
+                                 <t t-esc="datas.product"/>
+                            </ul>
+                        </t>
+
+                </div>
+            </t>
+        </xpath>
+    </t>
+</templates>
