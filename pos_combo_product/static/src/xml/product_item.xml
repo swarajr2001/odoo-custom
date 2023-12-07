@@ -1,3 +1,4 @@
+<!--product items xml inherited and added combo product label if its a combo product-->
 <templates id="template" xml:space="preserve">
     <t t-name="ProductItem" t-inherit="point_of_sale.ProductItem"  t-inherit-mode="extension" owl="1">
         <xpath expr="//div[hasclass('product-img')]" position="inside">

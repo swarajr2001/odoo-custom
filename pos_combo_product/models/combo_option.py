@@ -17,6 +17,7 @@ class ComboConfiguration(models.Model):
 
     @api.onchange('combo_pos_category_id')
     def category_change(self):
+        """function to set dynamically domain to field combo_pos_category_id to avoid occurrence"""
         category_id =self.product_template_id.combo_options_ids.mapped('combo_pos_category_id.id')
         domain = [('id', 'not in', category_id)]
         return {'domain': {'combo_pos_category_id': domain}}

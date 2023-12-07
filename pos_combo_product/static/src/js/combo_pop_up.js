@@ -5,7 +5,6 @@ const AbstractAwaitablePopup = require('point_of_sale.AbstractAwaitablePopup');
 const {useState} = owl;
 
 export class PosComboPopUp extends AbstractAwaitablePopup{
-
     setup(){
     this.state = useState({
             products: [],
@@ -19,18 +18,14 @@ export class PosComboPopUp extends AbstractAwaitablePopup{
 
      ComboClicked(ev,product){
         let occurrence = 0;
-
         for (const val of this.state.check_count) {
           if (val.category == product.pos_category) {
             occurrence++;
           }
         }
-
         this.state.count = product.max_count
-
         const productId = product.product_id;
         const isSelected = this.state.products.includes(productId);
-
         if(this.state.count <= occurrence || isSelected){
             const productId = product.product_id;
             const isSelected = this.state.products.includes(productId);
@@ -43,10 +38,9 @@ export class PosComboPopUp extends AbstractAwaitablePopup{
                         title:'Combo alert',
                         body: 'You have already selected maximum item for this category!',
                         confirmText: 'Ok',
-                    });
+                });
             }
         }
-
         else{
         let val = {}
         val['product_id'] = product.product_id
@@ -72,9 +66,6 @@ export class PosComboPopUp extends AbstractAwaitablePopup{
         } else {
             this.state.products.push(productId);
         }
-
-
-
         }
     }
 
@@ -87,35 +78,24 @@ export class PosComboPopUp extends AbstractAwaitablePopup{
                   }
               }
           }
-
-
-
-    this.props.this_product.combo_data = this.state.check_count;
-
-      console.log(this.props.this_product,"this")
-
-      order.add_product(this.props.this_product)
-
-
-
-
-//
-//      order.add_product(this.props.this_product)
-//      var products = this.state.products
-//      for(let product in products){
-//         order.add_product(troduct]]);
-//      }his.env.pos.db.product_by_id[products[p
-
-      this.confirm();
+      var combo_product = []
+      for(let pro in this.state.products){
+        let id = this.state.products[pro]
+        const product_details = this.env.pos.db.product_by_id[id]
+        let product_value = {}
+        product_value['product_id'] = product_details.id
+        product_value['category'] = product_details.pos_categ_id[1]
+        product_value['product'] = product_details.display_name
+        combo_product.push(product_value)
     }
-
-
+    this.props.this_product.combo_data = combo_product;
+    order.add_product(this.props.this_product)
+    this.confirm();
+    }
     Close(ev){
          this.confirm();
     }
-
 }
-
 PosComboPopUp.template = 'PosComboPopUp';
 Registries.Component.add(PosComboPopUp);
 
