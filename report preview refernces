@@ -1,0 +1,30 @@
+@http.route('/documents/show_report', type='http', auth="public",)
+    def _show_report(self, download=False):
+        report_ref = 'account.report_invoice_with_payments'
+        print("@@@@@@@@@@@@@@@@@111")
+        model = request.env['account.move'].browse(3)
+        report_type = 'pdf'
+        if report_type not in ('html', 'pdf', 'text'):
+            raise UserError(_("Invalid report type: %s", report_type))
+
+        ReportAction = request.env['ir.actions.report'].sudo()
+
+        if hasattr(model, 'company_id'):
+            if len(model.company_id) > 1:
+                raise UserError(_('Multi company reports are not supported.'))
+            ReportAction = ReportAction.with_company(model.company_id)
+
+        method_name = '_render_qweb_%s' % (report_type)
+        report = getattr(ReportAction, method_name)(report_ref, list(model.ids), data={'report_type': report_type})[0]
+        headers = self._get_http_headers(model, report_type, report, download)
+        return request.make_response(report, headers=list(headers.items()))
+
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="pdf_builder_module.Main">
+
+
+     <iframe id="sssss" class="mt8 mb8" width="100%" height="100%" frameborder="0" scrolling="no" src="/documents/show_report"/>
+
+    </t>
+</templates>
